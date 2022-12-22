@@ -1,0 +1,14 @@
+input AddVoteInput {
+  pollId: String
+  optionId: String
+}
+
+type AddVoteOutput {
+  newVote: String
+  oldVote: String
+  success: Boolean!
+}
+
+type Mutation {
+  addVote(vote: AddVoteInput!): AddVoteOutput
+}

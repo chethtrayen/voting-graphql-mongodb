@@ -1,0 +1,18 @@
+{
+  "compilerOptions": {
+    "baseUrl": "./",
+    "rootDirs": ["src"],
+    "outDir": "dist",
+    "lib": ["es2020"],
+    "target": "es2020",
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "paths": {
+      "@config": ["config"],
+      "@dbClient": ["dbClient"],
+      "@type": ["types/index"]
+    },
+    "types": ["node"]
+  }
+}

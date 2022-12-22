@@ -1,0 +1,29 @@
+type BallotVotes {
+  user_id: String
+  vote: String
+}
+
+type Option {
+  _id: String
+  label: String
+  result: Int
+}
+
+type Poll {
+  _id: String
+  label: String
+  options: [Option]
+}
+
+input CreatePollInput {
+  label: String!
+  options: [String]
+}
+
+type Query {
+  getPoll(id: String!): Poll!
+}
+
+type Mutation {
+  createPoll(poll: CreatePollInput!): String!
+}

@@ -1,0 +1,9 @@
+type User {
+  _id: String
+  loginId: String
+  password: String
+}
+
+type Query {
+  user: User
+}
