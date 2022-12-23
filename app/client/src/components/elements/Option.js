@@ -90,16 +90,23 @@ export const Option = ({
     }
   }, [data]);
 
-  const percentage = (overallResult === 0) ? 0 : Math.floor((result / overallResult) * 100);
-  const isHighlighted = useMemo(
-    () => (!closed && voted === id) || (closed && winner === id),
-    [closed, id, voted, winner]
-  );
+  const percentage =
+    overallResult === 0 ? 0 : Math.floor((result / overallResult) * 100);
+  const isHighlighted = useMemo(() => {
+    if (closed != null) {
+      if (closed) {
+        return winner === id;
+      } else {
+        return voted === id;
+      }
+    }
+  }, [closed, id, voted, winner]);
+
   return (
     <Container
       highlighted={isHighlighted}
       onClick={() => {
-        console.log(closed)
+        console.log(closed);
         if (!closed) addVote();
       }}
     >

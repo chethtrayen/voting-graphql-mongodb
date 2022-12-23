@@ -60,18 +60,18 @@ const GET_POLL = gql`
 
 export const Poll = () => {
   const { loading, data } = useQuery(GET_POLL, {
-    variables: { id: "63a5b2ba0e2e70a2f8854f06" },
+    variables: { id: "63a38c2bfdcd135cf1dfa276" },
   });
 
   const dispatch = useDispatch();
 
-  const [active, setActive] = useState(1);
+  const [active, setActive] = useState(2);
   const [poll, setPoll] = useState({});
 
   const overallResult = useMemo(() => {
-    if (data?.poll)
+    if (data?.poll) {
       return data.poll.options.reduce((acc, e) => e.result + acc, 0);
-    else return 0;
+    } else return 0;
   }, [data?.poll]);
 
   useEffect(() => {
@@ -98,7 +98,7 @@ export const Poll = () => {
     },
     {
       Component: Results,
-      data: {},
+      data: { pollId: poll._id },
     },
   ];
 

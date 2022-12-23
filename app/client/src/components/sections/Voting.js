@@ -1,9 +1,11 @@
 import styled from "styled-components";
 import { Button, Option } from "../index";
+import { useMutation, gql } from "@apollo/client";
 
 import { useSelector } from "react-redux";
 
 import { selectOptions } from "../../features/poll/optionSlice";
+import { useEffect } from "react";
 
 const SubheaderContainer = styled.div`
   margin: 0 0 25px 0;
@@ -14,6 +16,15 @@ const CloseBtnContainer = styled.div`
   gap: 20px;
 `;
 
+const CLOSE_POLL = gql`
+  mutation close($id: String!) {
+    closePoll(id: $id) {
+      success
+      winner
+    }
+  }
+`;
+
 export const Voting = ({
   closed,
   overallResult,
@@ -22,6 +33,16 @@ export const Voting = ({
   winner,
   setPoll,
 }) => {
+  const [closePoll, { data: res }] = useMutation(CLOSE_POLL, {
+    variables: { id: pollId },
+  });
+
+  useEffect(() => {
+    if (res?.closePoll.success) {
+      setPoll((p) => ({ ...p, closed: true, winner: res.closePoll.winner }));
+    }
+  }, [res, setPoll]);
+
   const ClosedStateBtn = () => {
     return (
       <CloseBtnContainer>
@@ -44,7 +65,7 @@ export const Voting = ({
         <Button
           backgroundColor="white"
           onClick={() => {
-            setPoll((p) => ({ ...p, closed: true }));
+            closePoll();
           }}
         >
           Close Voting
@@ -57,7 +78,11 @@ export const Voting = ({
   return (
     <>
       <SubheaderContainer>
-        {closed ? <ClosedStateBtn /> : <OpenStateBtn />}
+        {closed === true ? (
+          <ClosedStateBtn />
+        ) : closed === false ? (
+          <OpenStateBtn />
+        ) : null}
       </SubheaderContainer>
 
       {options.map((option) => (
