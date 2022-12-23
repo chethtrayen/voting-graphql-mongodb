@@ -1,0 +1,17 @@
+type ResultOptions {
+  label: String
+  result: Int
+  voters: [String]
+}
+
+type Result {
+  _id: String
+  poll_id: String
+  label: String
+  options: [ResultOptions]
+  success: Boolean
+}
+
+type Query {
+  result(pollId: String): Result
+}
