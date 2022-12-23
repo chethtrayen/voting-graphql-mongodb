@@ -13,6 +13,7 @@ type Poll {
   _id: String
   label: String
   options: [Option]
+  userVote: String
 }
 
 input CreatePollInput {
@@ -21,7 +22,7 @@ input CreatePollInput {
 }
 
 type Query {
-  getPoll(id: String!): Poll!
+  poll(id: String!): Poll!
 }
 
 type Mutation {

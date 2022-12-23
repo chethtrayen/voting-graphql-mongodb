@@ -1,7 +1,7 @@
 import { createPoll, getPoll } from "./service";
 const Query = {
-  getPoll: async (__, { id }) => {
-    return getPoll(id);
+  poll: async (__, { id }, { uid }) => {
+    return getPoll(id, uid);
   },
 };
 

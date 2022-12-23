@@ -1,4 +1,4 @@
-import client, { Polls } from "@dbClient";
+import client, { Polls, Votes } from "@dbClient";
 import { ObjectId } from "mongodb";
 
 const createPoll = async (poll) => {
@@ -12,22 +12,34 @@ const createPoll = async (poll) => {
 
     const insertRes = await Polls.insertOne(poll);
 
-    console.log(insertRes);
     return insertRes.insertedId;
   } catch (e) {
-    console.log(e);
     return false;
   } finally {
     await client.close();
   }
 };
 
-const getPoll = async (id) => {
+const getPoll = async (pollId, userId) => {
   try {
     await client.connect();
 
-    const poll = await Polls.findOne(new ObjectId(id));
-    return poll;
+    const poll_id = new ObjectId(pollId);
+
+    const poll = await Polls.findOne(poll_id);
+
+    const existingVote = await Votes.findOne({
+      $and: [
+        {
+          user_id: userId,
+        },
+        {
+          poll_id,
+        },
+      ],
+    });
+
+    return { ...poll, userVote: existingVote?.option_id.toString() };
   } catch (e) {
     return false;
   } finally {

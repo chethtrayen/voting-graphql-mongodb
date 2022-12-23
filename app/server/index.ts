@@ -15,7 +15,7 @@ import path from "path";
 
 import context from "./graphql/context";
 
-import ballotRoutes from "./routes/ballot";
+import ballotRoutes from "./routes/polls";
 import userRoutes from "./routes/user";
 
 const { port } = config;
@@ -46,6 +46,7 @@ const startGraphqlServer = async () => {
   await server.start();
 
   app.use(bodyParser.json());
+  app.use(cors());
 
   app.use(
     "/graphql",
