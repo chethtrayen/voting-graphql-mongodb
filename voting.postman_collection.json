@@ -1,0 +1,169 @@
+{
+	"info": {
+		"_postman_id": "c601a2a4-41fa-4604-bd40-81e60202f6d9",
+		"name": "voting",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "http://localhost:8000/graphql",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"query\": \"mutation create($poll: CreatePollInput!) {createPoll(poll: $poll)} \",\r\n \"variables\": { \r\n     \"poll\": {\r\n        \"label\": \"What is your favorite color?\", \r\n        \"options\": [\"red\", \"blue\"] \r\n    }\r\n }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8000/graphql",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"graphql"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8000/user/create",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8000/user/create",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"user",
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8000/graphql",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"query\": \"query get($id: String!) {getPoll(id: $id){ _id, label, options {_id, label, result} }}\",\r\n \"variables\": { \"id\": \"63a38c2bfdcd135cf1dfa276\" }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8000/graphql",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"graphql"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8000/graphql",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"query\": \"mutation add($vote: AddVoteInput!) {addVote(vote: $vote){oldVote, newVote, success}} \",\r\n \"variables\": { \r\n     \"vote\": {\r\n        \"pollId\": \"63a38c2bfdcd135cf1dfa276\", \r\n        \"optionId\": \"63a38c2bfdcd135cf1dfa274\"\r\n    }\r\n }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8000/graphql",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"graphql"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8000/graphql",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"query\": \"mutation close($id: String!) {closePoll(id: $id){success, winner }} \",\r\n \"variables\": { \r\n     \"id\" : \"63a38c2bfdcd135cf1dfa276\"\r\n }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8000/graphql",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"graphql"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8000/graphql",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"query\": \"query get($pollId: String!) {result(pollId: $pollId){ _id, label, options {label, result, voters} }}\",\r\n \"variables\": { \"pollId\": \"63a38c2bfdcd135cf1dfa276\" }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8000/graphql",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"graphql"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
