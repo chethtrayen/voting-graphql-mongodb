@@ -25,6 +25,21 @@ type Query {
   poll(id: String!): Poll!
 }
 
+type ResultOptions {
+  label: String
+  result: Int
+  voters: [String]
+}
+
+type Result {
+  _id: String
+  poll_id: String
+  label: String
+  options: [ResultOptions]
+  success: Boolean
+}
+
 type Mutation {
   createPoll(poll: CreatePollInput!): String!
+  closePoll(id: String): Result!
 }

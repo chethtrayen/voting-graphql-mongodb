@@ -5,10 +5,9 @@ const client = new MongoClient(config.databaseUrl);
 
 const database = client.db("voting");
 
-const Users = database.collection("users");
-const Polls = database.collection("polls");
-const Votes = database.collection("votes");
-
-export { Users, Polls, Votes };
+export const Users = database.collection("users");
+export const Polls = database.collection("polls");
+export const Votes = database.collection("votes");
+export const Results = database.collection("results");
 
 export default client;
