@@ -60,7 +60,7 @@ const GET_POLL = gql`
 
 export const Poll = () => {
   const { loading, data } = useQuery(GET_POLL, {
-    variables: { id: "63a38c2bfdcd135cf1dfa276" },
+    variables: { id: "63a5b2ba0e2e70a2f8854f06" },
   });
 
   const dispatch = useDispatch();

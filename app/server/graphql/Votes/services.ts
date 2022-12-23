@@ -21,6 +21,7 @@ const addVote = async ({ pollId, optionId, userId }) => {
       ],
     });
 
+
     if (poll) {
       const existingVote = await Votes.findOne({
         $and: [
@@ -33,9 +34,11 @@ const addVote = async ({ pollId, optionId, userId }) => {
         ],
       });
 
+
       // If the same vote shortcut function
-      if (existingVote.option_id.toString() === option_id.toString())
+      if (existingVote?.option_id.toString() === option_id.toString())
         return { success: false };
+
 
       const res = {
         newVote: optionId,
