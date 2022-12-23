@@ -45,6 +45,7 @@ const GET_POLL = gql`
   query poll($id: String!) {
     poll(id: $id) {
       _id
+      closed
       label
       userVote
       options {
@@ -52,6 +53,7 @@ const GET_POLL = gql`
         label
         result
       }
+      winner
     }
   }
 `;
@@ -64,7 +66,7 @@ export const Poll = () => {
   const dispatch = useDispatch();
 
   const [active, setActive] = useState(1);
-  const [userVote, setUserVote] = useState();
+  const [poll, setPoll] = useState({});
 
   const overallResult = useMemo(() => {
     if (data?.poll)
@@ -76,7 +78,7 @@ export const Poll = () => {
     if (data) {
       dispatch(setOptions(data.poll.options));
       dispatch(setVote(data.poll.userVote));
-      setUserVote(data.poll.userVote);
+      setPoll(data.poll);
     }
   }, [data, dispatch]);
 
@@ -86,11 +88,12 @@ export const Poll = () => {
     {
       Component: Voting,
       data: {
-        options: data.poll.options,
+        options: poll.options,
         overallResult,
-        pollId: data.poll._id,
-        setUserVote,
-        userVote,
+        pollId: poll._id,
+        closed: poll.closed,
+        winner: poll.winner,
+        setPoll: setPoll,
       },
     },
     {
@@ -102,7 +105,7 @@ export const Poll = () => {
   return (
     <Wrapper>
       <HeaderWrapper>
-        <Title>{data.poll.label}</Title>
+        <Title>{poll.label}</Title>
       </HeaderWrapper>
 
       <ContainerWrapper>

@@ -1,11 +1,11 @@
 import { createPoll, closePoll, getPoll } from "./services";
-const Query = {
+export const Query = {
   poll: async (_, { id }, { uid }) => {
     return getPoll(id, uid);
   },
 };
 
-const Mutation = {
+export const Mutation = {
   createPoll: async (_, { poll }) => {
     return createPoll(poll);
   },
@@ -14,5 +14,3 @@ const Mutation = {
     return closePoll(id);
   },
 };
-
-export { Query, Mutation };

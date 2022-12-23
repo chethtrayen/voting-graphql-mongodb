@@ -1,4 +1,3 @@
-import "./App.css";
 import { Poll } from "./components";
 import styled from "styled-components";
 

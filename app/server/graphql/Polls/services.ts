@@ -11,6 +11,7 @@ export const closePoll = async (id) => {
     );
 
     poll.options = poll.options.sort((a, b) => b.result - a.result);
+    const winner = poll.options[0]._id;
 
     // if (poll.closed) return { success: false };
 
@@ -19,6 +20,7 @@ export const closePoll = async (id) => {
       {
         $set: {
           closed: true,
+          winner,
         },
       }
     );
@@ -50,18 +52,15 @@ export const closePoll = async (id) => {
       return { ...o, voters };
     });
 
-    const resultsData = {
+    await Results.insertOne({
       poll_id,
       options: resultOption,
       label: poll.label,
-    };
-
-    const insertRes = await Results.insertOne(resultsData);
+    });
 
     return {
-      ...resultsData,
+      winner,
       success: true,
-      _id: insertRes.insertedId,
     };
   } catch (e) {
     return { success: false };

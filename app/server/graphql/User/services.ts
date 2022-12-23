@@ -1,5 +1,6 @@
 import client, { Users } from "@dbClient";
-const getUser = async () => {
+
+export const getUser = async () => {
   try {
     await client.connect();
 
@@ -11,5 +12,3 @@ const getUser = async () => {
     await client.close();
   }
 };
-
-export { getUser };

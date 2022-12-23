@@ -9,30 +9,67 @@ const SubheaderContainer = styled.div`
   margin: 0 0 25px 0;
 `;
 
-export const Voting = ({ overallResult, pollId, setActive, userVote }) => {
-  const options = useSelector(selectOptions);
-  return (
-    <>
-      <SubheaderContainer>
+const CloseBtnContainer = styled.div`
+  display: flex;
+  gap: 20px;
+`;
+
+export const Voting = ({
+  closed,
+  overallResult,
+  pollId,
+  setActive,
+  winner,
+  setPoll,
+}) => {
+  const ClosedStateBtn = () => {
+    return (
+      <CloseBtnContainer>
+        <Button backgroundColor="#bdc3c7">Closed</Button>
         <Button
-          backgroundColor="white"
+          backgroundColor="#00D1FF"
+          color="white"
           onClick={() => {
             setActive(2);
           }}
         >
+          See Results
+        </Button>
+      </CloseBtnContainer>
+    );
+  };
+  const OpenStateBtn = () => {
+    return (
+      <>
+        <Button
+          backgroundColor="white"
+          onClick={() => {
+            setPoll((p) => ({ ...p, closed: true }));
+          }}
+        >
           Close Voting
         </Button>
+      </>
+    );
+  };
+
+  const options = useSelector(selectOptions);
+  return (
+    <>
+      <SubheaderContainer>
+        {closed ? <ClosedStateBtn /> : <OpenStateBtn />}
       </SubheaderContainer>
 
       {options.map((option) => (
         <Option
+          closed={closed}
           id={option._id}
           key={option._id}
           label={option.label}
           overallResult={overallResult}
           pollId={pollId}
           result={option.result}
-          votedFor={userVote === option._id}
+          winner={winner}
         />
       ))}
     </>

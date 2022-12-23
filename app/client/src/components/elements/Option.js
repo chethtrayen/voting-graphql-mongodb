@@ -64,7 +64,15 @@ const ADD_VOTE = gql`
   }
 `;
 
-export const Option = ({ id, label, overallResult, pollId, result }) => {
+export const Option = ({
+  closed,
+  id,
+  label,
+  overallResult,
+  pollId,
+  result,
+  winner,
+}) => {
   const [addVote, { data }] = useMutation(ADD_VOTE, {
     variables: { vote: { optionId: id, pollId } },
   });
@@ -83,9 +91,17 @@ export const Option = ({ id, label, overallResult, pollId, result }) => {
   }, [data]);
 
   const percentage = Math.floor((result / overallResult) * 100);
-  const isHighlighted = useMemo(() => voted === id, [voted]);
+  const isHighlighted = useMemo(
+    () => (!closed && voted === id) || (closed && winner === id),
+    [closed, id, voted, winner]
+  );
   return (
-    <Container highlighted={isHighlighted} onClick={addVote}>
+    <Container
+      highlighted={isHighlighted}
+      onClick={() => {
+        if (!closed) addVote();
+      }}
+    >
       <Wrapper>
         <Label>{label}</Label>
 
